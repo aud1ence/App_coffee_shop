@@ -15,4 +15,13 @@ class Database
         $this->password = '1234';
     }
 
+    public function connect()
+    {
+        try {
+            return new \PDO($this->dsn, $this->username, $this->password);
+        } catch (\PDOException $PDOException) {
+            echo $PDOException->getMessage();
+            die();
+        }
+    }
 }
