@@ -22,4 +22,10 @@ class AuthService
         }
         return false;
     }
+
+    public function logOut()
+    {
+        unset($_SESSION['userLogin']);
+        header("Location: resource/views/login/login.php");
+    }
 }

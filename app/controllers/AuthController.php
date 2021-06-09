@@ -18,4 +18,9 @@ class AuthController
     {
         return $this->authService->checkUserEmailPassword($_REQUEST);
     }
+
+    public function logout()
+    {
+        $this->authService->logOut();
+    }
 }

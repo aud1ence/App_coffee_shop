@@ -1,10 +1,27 @@
 <?php
 use App\Middleware\Auth;
+//session_start();
 session_start();
+$timeout = 30; // Number of seconds until it times out.
+
+// Check if the timeout field exists.
+if(isset($_SESSION['timeout'])) {
+    // See if the number of seconds since the last
+    // visit is larger than the timeout period.
+    $duration = time() - (int)$_SESSION['timeout'];
+    if($duration > $timeout) {
+        // Destroy the session and restart it.
+        session_destroy();
+        session_start();
+    }
+}
+
+// Update the timout field with the current time.
+$_SESSION['timeout'] = time();
 require_once "vendor/autoload.php";
 $auth = new Auth();
 $auth->isLogin();
-require_once "vendor/autoload.php";
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,6 +33,8 @@ require_once "vendor/autoload.php";
     <title>Document</title>
 </head>
 <body>
+<?php require_once "router.php"?>
 <h1>OOP</h1>
+<a href="index.php?page=logout">Log out</a>
 </body>
 </html>
